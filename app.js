@@ -1,9 +1,18 @@
+// const express = require('express')
+require("dotenv").config()
+const Server=require("./models/server")
+const server=new Server()
+server.listen()
 
-require("dotenv").config();
+// const app = express()
 
-const Server = require("./models/server");
+// app.get('/', function (req, res) {
+//     res.send('Hola Rolling Coders!')
 
-const server = new Server();
 
-server.listen();
+// })
 
+// app.listen(process.env.PORT, () => {
+//     console.log("servidor online en puerto",process.env.PORT)
+// }
+// )
