@@ -1,69 +1,59 @@
-const express = require('express')
-const cors = require('express')
+const express = require("express");
+const cors = require("cors");
 //importo conex a DB
-const {dbConnection} = require('../database/config')
+const { dbConnection } = require("../database/config");
 
 class Server {
+	constructor() {
+		//defino lo que quiero que se inicialice cuando levanate el server
 
-    constructor(){
-    //defino lo que quiero que se inicialice cuando levanate el server
+		this.app = express();
+		this.usuariosPath = "/api/usuarios";
+		this.pizzasPath = "/api/pizzas";
+		this.authPath = "/api/auth";
+		this.pedidoPath = "/api/pedido";
 
-    this.app = express()
-    this.usuariosPath="/api/usuarios"
-    this.pizzasPath="/api/pizzas"
-    this.authPath="/api/auth"
+		//comnexion
+		this.conectarDB();
 
-    //comnexion
-    this.conectarDB();
+		//middlewares
+		this.middlewares();
 
-    //middlewares
-    this.middlewares();
+		//rutas
+		this.routes();
+	}
 
-    //rutas
-    this.routes();
+	//funcion para conectar la DB
 
+	async conectarDB() {
+		await dbConnection();
+	}
 
-    }
+	middlewares() {
+		//Carpeta publica
 
-    //funcion para conectar la DB
+		this.app.use(express.static("public"));
 
-    async conectarDB(){
-        await dbConnection()
-    }
+		//Cors
+		this.app.use(cors());
 
-    middlewares(){
+		//Acceso al Body
+		this.app.use(express.json());
+		this.app.use(express.urlencoded({ extended: true }));
+	}
 
-       //Carpeta publica
-       
-       this.app.use(express.static("public"));
+	routes() {
+		this.app.use(this.authPath, require("../routes/auth"));
+		this.app.use(this.usuariosPath, require("../routes/usuarios"));
+		this.app.use(this.pizzasPath, require("../routes/pizzas"));
+		this.app.use(this.pedidoPath, require("../routes/pedido"));
+	}
 
-       //Cors
-       this.app.use(cors());
-
-       //Acceso al Body
-       this.app.use(express.json());
-       this.app.use(express.urlencoded({extended:true}));
-       
-
-
-
-
-
-    }
-
-    routes(){
-        this.app.use(this.authPath, require("../routes/auth"))
-        this.app.use(this.usuariosPath, require("../routes/usuarios"))
-        this.app.use(this.pizzasPath, require("../routes/pizzas"))
-    }
-
-    listen(){
-        this.app.listen(process.env.PORT, ()=>{
-            console.log("Server onLine");
-        });
-        
-    }
-
+	listen() {
+		this.app.listen(process.env.PORT, () => {
+			console.log("Server onLine");
+		});
+	}
 }
 
-module.exports = Server
+module.exports = Server;
