@@ -11,7 +11,7 @@ class Server {
 		this.usuariosPath = "/api/usuarios";
 		this.pizzasPath = "/api/pizzas";
 		this.authPath = "/api/auth";
-		this.pedidoPath = "/api/pedido";
+		this.pedidoPath = "/api/pedidos";
 
 		//comnexion
 		this.conectarDB();
@@ -46,7 +46,7 @@ class Server {
 		this.app.use(this.authPath, require("../routes/auth"));
 		this.app.use(this.usuariosPath, require("../routes/usuarios"));
 		this.app.use(this.pizzasPath, require("../routes/pizzas"));
-		this.app.use(this.pedidoPath, require("../routes/pedido"));
+		this.app.use(this.pedidoPath, require("../routes/pedidos"));
 	}
 
 	listen() {

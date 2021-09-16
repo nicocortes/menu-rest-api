@@ -34,13 +34,6 @@ const pizzaExiste = async (nombre)=>{
 
 };
 
-
-
-
-
-
-
-
 module.exports = {
     emailExiste,
     idExiste,
