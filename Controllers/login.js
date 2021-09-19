@@ -15,6 +15,7 @@ const usuario = await Usuario.findOne({email});
 
 if (!usuario){
     return res.status(400).json({
+            ok:false,
             msg: "Usuario o Contraseña Incorrectos"
         });
 

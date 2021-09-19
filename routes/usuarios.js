@@ -12,6 +12,7 @@ const router = Router();
 const {
 
   usuariosGet,
+  usuarioGetId,
   usuariosPost,
   usuariosPut,
   usuariosDelete,
@@ -22,6 +23,17 @@ const {
 
 //GET usuarios
 router.get("/", usuariosGet);
+
+//GET usuario
+router.get(
+	"/:id",
+	[
+		check("id", "No es un ID válido").isMongoId(),
+		// validarCampos,
+	],
+	usuarioGetId
+);
+
 
 //POST usuarios
 router.post('/',
@@ -40,7 +52,7 @@ usuariosPost);
 //PUT usuarios
 router.put('/:id',
 [check("id", "No es un Id valido").isMongoId(),
-check("id").custom(idExiste),
+// check("id").custom(idExiste),
 validarCampos],
 usuariosPut);
 

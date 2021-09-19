@@ -2,14 +2,52 @@ const {request, response} = require ('express');
 const Pizza = require('../models/pizza')
 
 
-//GET
-const pizzasGet =(req = request, res= response) =>{
+//GET PIZZAS
+const pizzasGet = async (req = request, res= response) =>{
+    let {limite = 5, desde=0} = req.query
+
+    limite = Number(limite)
+    desde = Number(desde)
+
+    if (isNaN(limite)) {
+        limite = 5
+    }
+    if (isNaN(desde)) {
+        desde = 0
+    }
+
+    const [total, pizzas] = await Promise.all([
+        Pizza.countDocuments({ estado: true }),
+        Pizza.find({ estado: true }).skip(desde).limit(limite).populate("categoria", "nombre")
+    ])
+
+
+
         
         res.json({
             msg: "GET pizzas",
+            total,
+            pizzas,
+            
+            
+            
         });
       
       }
+
+ //GET PIZZA  
+ 
+ const pizzaGet = async (req = request, res = response) => {
+	const { id } = req.params;
+
+	const pizza = await Pizza.findById(id)
+		// .populate("usuario", "nombre email")
+		.populate("categoria", "nombre");
+
+	res.json({
+		pizza,
+	});
+};
 
       
 //POST
@@ -69,6 +107,7 @@ const pizzasDelete = async (req = request, res= response) =>{
 
   module.exports = {
       pizzasGet,
+      pizzaGet,
       pizzasPost,
       pizzasPut,
       pizzasDelete

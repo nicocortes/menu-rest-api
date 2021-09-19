@@ -10,6 +10,7 @@ const router = Router();
 const {
 
   pizzasGet,
+  pizzaGet,
   pizzasPost,
   pizzasPut,
   pizzasDelete,
@@ -20,6 +21,21 @@ const {
 
 //GET pizzas
 router.get("/", pizzasGet);
+
+//GET Pizza
+router.get(
+	"/:id",
+	[
+		check("id", "No es un ID válido").isMongoId(),
+		check("id").custom(pizzaExiste),
+		validarCampos,
+	],
+	pizzaGet
+);
+
+
+
+
 
 //POST pizzas
 router.post('/',
@@ -36,7 +52,7 @@ validarCampos
 
 //PUT pizzas
 router.put('/:id',
-[check("nombre").custom(pizzaExiste),
+[
 check("categoria", "No es una categoria válida").isIn(["Normal", "Light"]),
 validarCampos
 
@@ -49,8 +65,8 @@ pizzasPut);
 router.delete('/:id',
 [
   validarCampos,
-  esAdminRole,
   validarJWT,
+  esAdminRole,
   check("id", "No es un Id valido").isMongoId(),
   check("id").custom(idExiste),
   

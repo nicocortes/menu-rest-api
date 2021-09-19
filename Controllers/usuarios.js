@@ -5,29 +5,47 @@ const bcrypt = require('bcrypt');
 
 
 
-//GET
+//GET Usuarios
 const usuariosGet = async (req = request, res= response) =>{
 
-    // let {limite, desde}=req.query;
-    // limite = number(limite);
-    // desde = number(desde);
+    let {limite=5, desde=0}=req.query;
+    limite = Number(limite);
+    desde = Number(desde);
 
 
-    // usuarios = await Usuario.find({estado:true}).limit(limite).skip(desde)
-    usuarios = await Usuario.find({estado:true})
+    const usuarios = await Usuario.find({estado:true}).limit(limite).skip(desde)
+    const total= await Usuario.countDocuments({estado:true})
+
+//    const usuarios = await Usuario.find({estado:true})
         
         res.json({
+            total,
             usuarios,
         });
       
       }
+
+      //GET Usuario
+
+      const usuarioGetId = async (req = request, res = response) => {
+        const { id } = req.params;
+    
+        const usuario = await Usuario.findById(id)
+            // .populate("usuario", "nombre email")
+            .populate("nombre", "nombre email");
+    
+        res.json({
+            usuario,
+        });
+    };
+
 
       
 //POST
 const usuariosPost = async (req = request, res= response) =>{
 
 
-
+console.log(req.body)
     const {nombre, email, password, rol} =req.body;
     const usuario = new Usuario({nombre, email, password, rol})
     
@@ -55,8 +73,8 @@ const usuariosPut = async (req = request, res= response) =>{
 
 
 
-    const {id} = req.params;
-    const {_id, rol, ...resto} = req.body;
+    const id = req.params.id;
+    const {nombre,password,rol, ...resto} = req.body;
 
     if (password){
         const salt = bcrypt.genSaltSync();
@@ -69,7 +87,7 @@ const usuariosPut = async (req = request, res= response) =>{
 
         
     res.json({
-        msg: "PUT usuarios",
+        msg: "Usuario Actualizado",
         usuario
     });
   
@@ -90,7 +108,7 @@ const usuariosDelete = async (req = request, res= response) =>{
 
         
     res.json({
-        msg: "DELETE usuario",
+        msg: "Usuario Borrado",
         usuario
     });
   
@@ -98,6 +116,7 @@ const usuariosDelete = async (req = request, res= response) =>{
 
   module.exports = {
       usuariosGet,
+      usuarioGetId,
       usuariosPost,
       usuariosPut,
       usuariosDelete,

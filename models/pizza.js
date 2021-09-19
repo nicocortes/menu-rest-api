@@ -39,6 +39,11 @@ const PizzaSchema = new Schema ({
         type:String
     },
 
+    disponible:{
+        type: Boolean,
+        default: true
+    }
+
 
 
     
