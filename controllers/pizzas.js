@@ -57,7 +57,8 @@ const pizzasPost = async (req = request, res = response) => {
 //PUT
 const pizzasPut = async (req = request, res = response) => {
 	const id = req.params.id;
-	const { nombre, ...resto } = req.body;
+	//const { nombre, ...resto } = req.body;
+	const resto = req.body;
 
 	const pizza = await Pizza.findByIdAndUpdate(id, resto, { new: true });
 

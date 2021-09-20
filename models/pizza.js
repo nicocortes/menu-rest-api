@@ -30,8 +30,7 @@ const PizzaSchema = new Schema ({
     categoria:{
         type: String,
         require:[true, "Categoria es obligatorio"],
-        enum: ["Normal", "Light"]
-
+        enum: ["CLASICA", "SIN TAC","ESPECIALIDAD DE LA CASA", "A LA PIEDRA"]
     },
 
     img:{

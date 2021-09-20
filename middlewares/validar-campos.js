@@ -4,10 +4,10 @@ const validarCampos = (req,res,next)=>{
 
     const errores = validationResult(req);
     if (!errores.isEmpty()){
-        return res.json({errors: errores.array()});
+        return res.status(500).json({errors: errores.array()});
     }
 
-    next()
+    next();
 
 
 }

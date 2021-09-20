@@ -17,23 +17,39 @@ const usuariosGet = async (req = request, res = response) => {
 };
 
 //POST
-const usuariosPost = async (req = request, res = response) => {
-	const { nombre, email, password, rol } = req.body;
-	const usuario = new Usuario({ nombre, email, password, rol });
+const usuariosPost = async (req = request, res= response) =>{
 
-	//encriptacion
+    const {nombre, email, password, domicilio, rol} = req.body;
 
-	const salt = bcrypt.genSaltSync();
-	usuario.password = bcrypt.hashSync(password, salt);
+    try {
+        if(rol === null)
+        {
+            rol="USER_ROLE";
+        }
+        console.log(rol);
+        const usuario = new Usuario({nombre, email, password, domicilio, rol})
+    
+        //encriptacion
+        const salt = bcrypt.genSaltSync();
+    
+        usuario.password = bcrypt.hashSync(password, salt);
+    
+        await usuario.save();
+        
+        res.status(200).json({
+		    msg: "Usuario creado con éxito.",
+		    usuario,
+	    });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado...'
+        });
+    }
+  }
 
-	await usuario.save();
-
-	res.json({
-		msg: "Usuario creado",
-		usuario,
-	});
-};
-
+  
 //PUT
 const usuariosPut = async (req = request, res = response) => {
 	const { id } = req.params;

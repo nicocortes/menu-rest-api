@@ -13,13 +13,14 @@ const UsuarioSchema = new Schema ({
         require:[true, "El email es obligatorio"],
         unique: true
     },
-
     password:{
         type: String,
         require:[true, "El password es obligatorio"]
 
     },
-
+    domicilio:{
+        type: String
+    },
     img:{
 
         type:String
@@ -27,6 +28,7 @@ const UsuarioSchema = new Schema ({
 
     rol:{
         type: String,
+        default:"USER_ROLE",
         require: true,
         enum: ["USER_ROLE", "ADMIN_ROLE"]
 
