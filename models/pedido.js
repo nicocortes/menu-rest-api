@@ -8,34 +8,43 @@ const PedidoSchema = new Schema(
 			ref: "Usuario",
 			required: true,
 		},
-		items:[{			
-			nombre:{
-				type: String,
-				required: true, 
+		pizzas: [
+			{
+				sabor: {
+					type: String,
+					required: true,
+				},
+				cantidad: {
+					type: Number,
+					required: true,
+				},
+				precio: {
+					type: Number,
+					required: true,
+				},
+				subtotal: {
+					type: Number,
+					required: true,
+				},
 			},
-			cantidad:{
-				type: Number,
-				required: true,
-			},
-			precio:{
-				type: Number,
-				required: true,	
-			}
-		}],
+		],
 		total: {
-			type: Number,			
+			type: Number,
+		},
+		costo: {
+			type: Number,
 		},
 		//para poder persistir el motivo por el cual se cancelo el pedido
 		nota: {
-			type: String,			
-		},	
-		//utilizado para baja lógica	
+			type: String,
+		},
+		//utilizado para baja lógica
 		estado: {
 			type: Boolean,
 			default: true,
 			required: true,
 		},
-		//el Pedido nace con esta propiedad en false, significa que el Pedido todavia 
+		//el Pedido nace con esta propiedad en false, significa que el Pedido todavia
 		//no se termino para despacharlo al Cliente
 		realizado: {
 			type: Boolean,
@@ -46,16 +55,15 @@ const PedidoSchema = new Schema(
 		//y se convierte en Pedido (una comanda para la cocina)
 		Fecha: {
 			type: Date,
-			default: Date.now
-		},	
-		
+			default: Date.now,
+		},
 	},
 	{ timestamps: true }
 );
 
 PedidoSchema.methods.toJSON = function () {
 	const { __v, estado, ...data } = this.toObject();
-  
+
 	return data;
 };
 

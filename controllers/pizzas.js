@@ -3,7 +3,7 @@ const Pizza = require("../models/pizza");
 
 //GET
 const pizzasGet = async (req = request, res = response) => {
-	let { limite = 5, desde = 0 } = req.query;
+	let { limite = 6, desde = 0 } = req.query;
 
 	limite = Number(limite);
 	desde = Number(desde);
