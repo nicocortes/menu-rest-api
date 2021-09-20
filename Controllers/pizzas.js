@@ -26,7 +26,7 @@ const pizzasGet = async (req = request, res= response) =>{
         
         res.json({
             msg: "GET pizzas",
-            total,
+            Total: total,
             pizzas,
             
             
@@ -71,7 +71,7 @@ const pizzasPost = async (req = request, res= response) =>{
 const pizzasPut = async (req = request, res= response) =>{
 
     const id = req.params.id;
-    const {nombre, ...resto} = req.body;
+    const resto = req.body;
 
 
 
@@ -79,7 +79,7 @@ const pizzasPut = async (req = request, res= response) =>{
 
         
     res.json({
-        msg: "PUT pizzas",
+        msg: "Pizza Actualizada",
         pizza
     });
   
@@ -99,7 +99,7 @@ const pizzasDelete = async (req = request, res= response) =>{
     const pizza = await Pizza.findByIdAndUpdate(id, {estado:false});
         
     res.json({
-        msg: "DELETE pizza",
+        msg: "Pizza Eliminada",
         pizza
     });
   

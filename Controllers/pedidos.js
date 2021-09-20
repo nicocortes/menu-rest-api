@@ -117,7 +117,7 @@ const actualizarPedido = async (req, res = response) => {
 			}
 		}
 		
-		const { _id, estado, usuario, items, total, nota, ...resto } = req.body;
+		// const { _id, estado, usuario, items, total, nota, ...resto } = req.body;
 	
 	
 		/*
@@ -125,12 +125,13 @@ const actualizarPedido = async (req, res = response) => {
 	  		resto.nombre = resto.nombre.toUpperCase();
 		}
 		*/
-		resto.realizado = true;
+		// resto.realizado = true;
 		//resto.usuario = req.usuario._id;
   
-		const pedidoActualizado = await Pedido.findByIdAndUpdate(id, resto, {
-	  		new: true,
-		});
+		const pedidoActualizado = await Pedido.findByIdAndUpdate(id, 
+			{realizado: true},
+	  		{new: true }
+		);
   
 		res.json({
 	 		msg: "Pedido actualizado",

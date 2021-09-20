@@ -19,7 +19,7 @@ const usuariosGet = async (req = request, res= response) =>{
 //    const usuarios = await Usuario.find({estado:true})
         
         res.json({
-            total,
+            Total: total,
             usuarios,
         });
       
@@ -74,7 +74,7 @@ const usuariosPut = async (req = request, res= response) =>{
 
 
     const id = req.params.id;
-    const {nombre,password,rol, ...resto} = req.body;
+    const {_id,rol,...resto} = req.body;
 
     if (password){
         const salt = bcrypt.genSaltSync();
