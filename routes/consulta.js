@@ -4,7 +4,6 @@ const { consultaPost } = require("../controllers/consulta");
 
 const router = Router();
 
-//Contacto
 router.post(
 	"/",
 	[validarCampos],

@@ -1,12 +1,9 @@
 const express = require("express");
 const cors = require("cors");
-//importo conex a DB
 const { dbConnection } = require("../database/config");
 
 class Server {
 	constructor() {
-		//defino lo que quiero que se inicialice cuando levanate el server
-
 		this.app = express();
 		this.usuariosPath = "/api/usuarios";
 		this.pizzasPath = "/api/pizzas";
@@ -14,31 +11,22 @@ class Server {
 		this.pedidoPath = "/api/pedidos";
 		this.consultaPath = "/api/consulta";
 
-		//comnexion
 		this.conectarDB();
 
-		//middlewares
 		this.middlewares();
 
-		//rutas
 		this.routes();
 	}
-
-	//funcion para conectar la DB
 
 	async conectarDB() {
 		await dbConnection();
 	}
 
 	middlewares() {
-		//Carpeta publica
-
 		this.app.use(express.static("public"));
 
-		//Cors
 		this.app.use(cors());
 
-		//Acceso al Body
 		this.app.use(express.json());
 		this.app.use(express.urlencoded({ extended: true }));
 	}

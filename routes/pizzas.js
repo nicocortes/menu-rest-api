@@ -14,7 +14,6 @@ const {
 	pizzasDelete,
 } = require("../controllers/pizzas");
 
-//GET pizzas
 router.get("/", pizzasGet);
 
 router.get(
@@ -27,7 +26,6 @@ router.get(
 	pizzaGet
 );
 
-//POST pizzas
 router.post(
 	"/",
 	[
@@ -35,13 +33,11 @@ router.post(
 		check("nombre").custom(pizzaExiste),
 		check("precio", "El precio es obligatorio").not().isEmpty(),
 		check("detalle", "El detalle es obligatorio").not().isEmpty(),
-		//check("categoria", "No es una categoria válida").isIn(["Normal", "Light"]),
 		validarCampos,
 	],
 	pizzasPost
 );
 
-//PUT pizzas
 router.put(
 	"/:id",
 	[
@@ -53,7 +49,6 @@ router.put(
 	pizzasPut
 );
 
-//DELETE pizzas
 router.delete(
 	"/:id",
 	[
