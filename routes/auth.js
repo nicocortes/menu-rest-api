@@ -5,7 +5,6 @@ const { login } = require("../controllers/login");
 const { validarCampos } = require("../middlewares/validar-campos");
 const router = Router();
 
-//POST
 router.post(
 	"/login",
 	[

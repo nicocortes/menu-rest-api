@@ -1,7 +1,6 @@
 const { request, response } = require("express");
 const Pizza = require("../models/pizza");
 
-//GET
 const pizzasGet = async (req = request, res = response) => {
 	let { limite = 6, desde = 0 } = req.query;
 
@@ -20,7 +19,6 @@ const pizzasGet = async (req = request, res = response) => {
 		Pizza.find({ estado: true })
 			.skip(desde)
 			.limit(limite)
-			// .populate("usuario", "nombre email")
 			.populate("categoria", "nombre"),
 	]);
 
@@ -33,16 +31,13 @@ const pizzasGet = async (req = request, res = response) => {
 const pizzaGet = async (req, res = response) => {
 	const { id } = req.params;
 
-	const pizza = await Pizza.findById(id)
-		// .populate("usuario", "nombre email")
-		.populate("categoria", "nombre");
+	const pizza = await Pizza.findById(id).populate("categoria", "nombre");
 
 	res.json({
 		pizza,
 	});
 };
 
-//POST
 const pizzasPost = async (req = request, res = response) => {
 	const { nombre, precio, detalle, categoria, img } = req.body;
 	const pizza = new Pizza({ nombre, precio, detalle, categoria, img });
@@ -54,12 +49,9 @@ const pizzasPost = async (req = request, res = response) => {
 	});
 };
 
-//PUT
 const pizzasPut = async (req = request, res = response) => {
 	const id = req.params.id;
-	//const { nombre, ...resto } = req.body;
 	const resto = req.body;
-
 	const pizza = await Pizza.findByIdAndUpdate(id, resto, { new: true });
 
 	res.json({
@@ -68,14 +60,8 @@ const pizzasPut = async (req = request, res = response) => {
 	});
 };
 
-//DELETE
 const pizzasDelete = async (req = request, res = response) => {
 	const id = req.params.id;
-
-	//Para borrar completamente
-	// const usuario = await Usuario.findOneAndDelete(id);
-
-	//Para solo cambiar el estado,
 
 	const pizza = await Pizza.findByIdAndUpdate(id, { estado: false });
 

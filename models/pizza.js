@@ -1,46 +1,36 @@
-const {Schema, model} = require('mongoose')
+const { Schema, model } = require("mongoose");
 
-const PizzaSchema = new Schema ({
+const PizzaSchema = new Schema({
+	nombre: {
+		type: String,
+		required: [true, "El nombre es obligatorio"],
+		unique: true,
+	},
 
-    nombre: {
-        type: String,
-        require:[true, "El nombre es obligatorio"],
-        unique: true
+	estado: {
+		type: Boolean,
+		default: true,
+	},
 
-    },
+	precio: {
+		type: Number,
+		required: [true, "El precio es obligatorio"],
+	},
 
-    estado:{
-        type: Boolean,
-        default: true
-        
-    },
+	detalle: {
+		type: String,
+		required: [true, "El detalle es obligatorio"],
+	},
 
-    precio:{
-        type: Number,
-        require:[true, "El precio es obligatorio"]
+	categoria: {
+		type: String,
+		required: [true, "Categoria es obligatorio"],
+		enum: ["CLASICA", "SIN TAC", "ESPECIALIDAD DE LA CASA", "A LA PIEDRA"],
+	},
 
-    },
+	img: {
+		type: String,
+	},
+});
 
-    detalle:{
-        type: String,
-        require:[true, "El detalle es obligatorio"]
-
-    },
-
-    categoria:{
-        type: String,
-        require:[true, "Categoria es obligatorio"],
-        enum: ["CLASICA", "SIN TAC","ESPECIALIDAD DE LA CASA", "A LA PIEDRA"]
-    },
-
-    img:{
-
-        type:String
-    },
-
-
-
-    
-})
-
-module.exports= model("Pizza", PizzaSchema)
+module.exports = model("Pizza", PizzaSchema);

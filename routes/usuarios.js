@@ -8,15 +8,20 @@ const { esAdminRole } = require("../middlewares/validar-rol");
 const router = Router();
 const {
 	usuariosGet,
+	usuarioGet,
 	usuariosPost,
 	usuariosPut,
 	usuariosDelete,
 } = require("../controllers/usuarios");
 
-//GET usuarios
 router.get("/", usuariosGet);
 
-//POST usuarios
+router.get(
+	"/:id",
+	[check("id", "No es un ID válido").isMongoId(), validarCampos],
+	usuarioGet
+);
+
 router.post(
 	"/",
 	[
@@ -27,25 +32,18 @@ router.post(
 		}),
 		check("email", "No es un correo válido").isEmail(),
 		check("email").custom(emailExiste),
-		//check("rol", "No es un rol válido").isIn(["ADMIN_ROLE", "USER_ROLE"]),
 		validarCampos,
 	],
 
 	usuariosPost
 );
 
-//PUT usuarios
 router.put(
 	"/:id",
-	[
-		check("id", "No es un Id valido").isMongoId(),
-		check("id").custom(idExiste),
-		validarCampos,
-	],
+	[check("id", "No es un Id valido").isMongoId(), validarCampos],
 	usuariosPut
 );
 
-//DELETE usuarios
 router.delete(
 	"/:id",
 	[
