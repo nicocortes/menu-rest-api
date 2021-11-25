@@ -14,7 +14,7 @@ const {
 	pizzasDelete,
 } = require("../controllers/pizzas");
 
-router.get("/", pizzasGet);
+router.get("/categoria/:categoria", pizzasGet);
 
 router.get(
 	"/:id",
@@ -40,11 +40,7 @@ router.post(
 
 router.put(
 	"/:id",
-	[
-		check("nombre").custom(pizzaExiste),
-		check("categoria", "No es una categoria válida").isIn(["Normal", "Light"]),
-		validarCampos,
-	],
+	[validarJWT, check("id", "No es un Id valido").isMongoId(), validarCampos],
 
 	pizzasPut
 );
@@ -52,9 +48,9 @@ router.put(
 router.delete(
 	"/:id",
 	[
+		validarJWT,
 		validarCampos,
 		esAdminRole,
-		validarJWT,
 		check("id", "No es un Id valido").isMongoId(),
 		check("id").custom(idExiste),
 	],

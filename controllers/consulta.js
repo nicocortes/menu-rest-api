@@ -7,7 +7,7 @@ const consultaPost = async (req = request, res = response) => {
 	await consulta.save();
 
 	res.json({
-		msg: "Consulta creada con éxito",
+		msg: "Tu consulta ha sido enviada",
 		consulta,
 	});
 };

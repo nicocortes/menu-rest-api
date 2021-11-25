@@ -27,7 +27,10 @@ const PizzaSchema = new Schema({
 		required: [true, "Categoria es obligatorio"],
 		enum: ["CLASICA", "SIN TAC", "ESPECIALIDAD DE LA CASA", "A LA PIEDRA"],
 	},
-
+	publicado: {
+		type: Boolean,
+		default: true,
+	},
 	img: {
 		type: String,
 	},
